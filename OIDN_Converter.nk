@@ -1,0 +1,907 @@
+#! C:/Program Files/Nuke14.1v5/nuke-14.1.5.dll -nx
+version 14.0 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="-8" w="2560" h="1377" maximized="1" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1780" stretch="1"/>
+            <splitter orientation="2">
+                <split size="781"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="550"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                    <page id="DAG.2"/>
+                </dock>
+            </splitter>
+            <split size="732"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+                <page id="Scenegraph.1"/>
+                <page id="uk.co.thefoundry.scripteditor.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ frame 1001
+ first_frame 1001
+ last_frame 1206
+ lock_range true
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ monitorOutLUT rec709
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+Group {
+ inputs 0
+ name OIDN_Converter1
+ tile_color 0x43ffffff
+ xpos 3162
+ ypos -1274
+}
+ BackdropNode {
+  inputs 0
+  name env_beauty2
+  tile_color 0x727272ff
+  label "Beauty Multi Pass OIDN Convert Template"
+  note_font_size 42
+  xpos 181
+  ypos -459
+  bdwidth 1372
+  bdheight 430
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos 192
+  ypos -364
+ }
+set N83e58900 [stack 0]
+ Dot {
+  name Dot3
+  note_font_size 35
+  note_font_color 0xffffff
+  xpos 226
+  ypos -69
+ }
+push $N83e58900
+add_layer {diffuse_direct diffuse_direct.red diffuse_direct.green diffuse_direct.blue}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  in1 diffuse_direct
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 diffuse_direct.red 0 0 rgba.red 0 0 diffuse_direct.green 0 1 rgba.green 0 1 diffuse_direct.blue 0 2 rgba.blue 0 2 black -1 -1 rgba.alpha 0 3"
+  name Shuffle45
+  label IN_diff_direct
+  xpos 309
+  ypos -387
+ }
+set N83e67700 [stack 0]
+add_layer {diffuse_indirect diffuse_indirect.red diffuse_indirect.green diffuse_indirect.blue}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  in1 diffuse_indirect
+  out1 rgb
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "3 diffuse_indirect.red 0 0 rgba.red 0 0 diffuse_indirect.green 0 1 rgba.green 0 1 diffuse_indirect.blue 0 2 rgba.blue 0 2"
+  name Shuffle46
+  label IN_diff_indirect
+  xpos 418
+  ypos -387
+ }
+set N83e67200 [stack 0]
+add_layer {specular_direct specular_direct.red specular_direct.green specular_direct.blue}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  in1 specular_direct
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 specular_direct.red 0 0 rgba.red 0 0 specular_direct.green 0 1 rgba.green 0 1 specular_direct.blue 0 2 rgba.blue 0 2 black -1 -1 rgba.alpha 0 3"
+  name Shuffle47
+  label IN_spec_direct
+  xpos 529
+  ypos -387
+ }
+set N83e66d00 [stack 0]
+add_layer {specular_indirect specular_indirect.red specular_indirect.green specular_indirect.blue}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  in1 specular_indirect
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 specular_indirect.red 0 0 rgba.red 0 0 specular_indirect.green 0 1 rgba.green 0 1 specular_indirect.blue 0 2 rgba.blue 0 2 black -1 -1 rgba.alpha 0 3"
+  name Shuffle48
+  label IN_spec_indirect
+  xpos 639
+  ypos -387
+ }
+set N677e000 [stack 0]
+add_layer {transmission_direct transmission_direct.red transmission_direct.green transmission_direct.blue}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  in1 transmission_direct
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 transmission_direct.red 0 0 rgba.red 0 0 transmission_direct.green 0 1 rgba.green 0 1 transmission_direct.blue 0 2 rgba.blue 0 2 black -1 -1 rgba.alpha 0 3"
+  name Shuffle49
+  label IN_trans_direct
+  xpos 749
+  ypos -387
+ }
+set N677e500 [stack 0]
+add_layer {transmission_indirect transmission_indirect.red transmission_indirect.green transmission_indirect.blue}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  in1 transmission_indirect
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 transmission_indirect.red 0 0 rgba.red 0 0 transmission_indirect.green 0 1 rgba.green 0 1 transmission_indirect.blue 0 2 rgba.blue 0 2 black -1 -1 rgba.alpha 0 3"
+  name Shuffle50
+  label IN_trans_indirect
+  xpos 859
+  ypos -387
+ }
+set N677ea00 [stack 0]
+add_layer {sss_direct sss_direct.red sss_direct.green sss_direct.blue}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  in1 sss_direct
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 sss_direct.red 0 0 rgba.red 0 0 sss_direct.green 0 1 rgba.green 0 1 sss_direct.blue 0 2 rgba.blue 0 2 black -1 -1 rgba.alpha 0 3"
+  name Shuffle51
+  label "IN_sss_direct\n"
+  xpos 969
+  ypos -387
+ }
+set N677ef00 [stack 0]
+add_layer {sss_indirect sss_indirect.red sss_indirect.green sss_indirect.blue}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  in1 sss_indirect
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 sss_indirect.red 0 0 rgba.red 0 0 sss_indirect.green 0 1 rgba.green 0 1 sss_indirect.blue 0 2 rgba.blue 0 2 black -1 -1 rgba.alpha 0 3"
+  name Shuffle52
+  label "IN_sss_indirect\n"
+  xpos 1079
+  ypos -387
+ }
+set N677f400 [stack 0]
+add_layer {coat_direct coat_direct.red coat_direct.green coat_direct.blue}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  in1 coat_direct
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 coat_direct.red 0 0 rgba.red 0 0 coat_direct.green 0 1 rgba.green 0 1 coat_direct.blue 0 2 rgba.blue 0 2 black -1 -1 rgba.alpha 0 3"
+  name Shuffle53
+  label IN_coat_direct
+  xpos 1185
+  ypos -387
+ }
+set N677f900 [stack 0]
+add_layer {coat_indirect coat_indirect.red coat_indirect.green coat_indirect.blue}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  in1 coat_indirect
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 coat_indirect.red 0 0 rgba.red 0 0 coat_indirect.green 0 1 rgba.green 0 1 coat_indirect.blue 0 2 rgba.blue 0 2 black -1 -1 rgba.alpha 0 3"
+  name Shuffle54
+  label IN_coat_indirect
+  xpos 1295
+  ypos -387
+ }
+set N677fe00 [stack 0]
+add_layer {emission emission.red emission.green emission.blue}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  in1 emission
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 emission.red 0 0 rgba.red 0 0 emission.green 0 1 rgba.green 0 1 emission.blue 0 2 rgba.blue 0 2 black -1 -1 rgba.alpha 0 3"
+  name Shuffle55
+  label IN_emission
+  xpos 1405
+  ypos -355
+ }
+add_layer {OIDN_emossion OIDN_emossion.red OIDN_emossion.green OIDN_emossion.blue OIDN_emossion.alpha}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  out1 OIDN_emossion
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 rgba.red 0 0 OIDN_emossion.red 0 0 rgba.green 0 1 OIDN_emossion.green 0 1 rgba.blue 0 2 OIDN_emossion.blue 0 2 black -1 -1 OIDN_emossion.alpha 0 3"
+  name Shuffle38
+  label OUT_emission
+  xpos 1405
+  ypos -290
+ }
+set N6780800 [stack 0]
+ Dot {
+  name Dot14
+  note_font_size 35
+  note_font_color 0xffffff
+  xpos 1542
+  ypos -281
+ }
+ Dot {
+  name Dot15
+  note_font_size 35
+  note_font_color 0xffffff
+  xpos 1543
+  ypos -128
+ }
+push $N677fe00
+ oidnDenoise {
+  name oidnDenoise10
+  xpos 1295
+  ypos -317
+ }
+add_layer {OIDN_coat_indirect OIDN_coat_indirect.red OIDN_coat_indirect.green OIDN_coat_indirect.blue OIDN_coat_indirect.alpha}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  out1 OIDN_coat_indirect
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 rgba.red 0 0 OIDN_coat_indirect.red 0 0 rgba.green 0 1 OIDN_coat_indirect.green 0 1 rgba.blue 0 2 OIDN_coat_indirect.blue 0 2 black -1 -1 OIDN_coat_indirect.alpha 0 3"
+  name Shuffle37
+  label OUT_coat_indirect
+  xpos 1295
+  ypos -295
+ }
+set N6781200 [stack 0]
+push $N677f900
+ oidnDenoise {
+  name oidnDenoise9
+  xpos 1185
+  ypos -317
+ }
+add_layer {OIDN_coat_direct OIDN_coat_direct.red OIDN_coat_direct.green OIDN_coat_direct.blue OIDN_coat_direct.alpha}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  out1 OIDN_coat_direct
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 rgba.red 0 0 OIDN_coat_direct.red 0 0 rgba.green 0 1 OIDN_coat_direct.green 0 1 rgba.blue 0 2 OIDN_coat_direct.blue 0 2 black -1 -1 OIDN_coat_direct.alpha 0 3"
+  name Shuffle36
+  label OUT_coat_direct
+  xpos 1185
+  ypos -295
+ }
+set N64ec000 [stack 0]
+push $N677f400
+ oidnDenoise {
+  name oidnDenoise8
+  xpos 1079
+  ypos -317
+ }
+add_layer {OIDN_sss_indirect OIDN_sss_indirect.red OIDN_sss_indirect.green OIDN_sss_indirect.blue OIDN_sss_indirect.alpha}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  out1 OIDN_sss_indirect
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 rgba.red 0 0 OIDN_sss_indirect.red 0 0 rgba.green 0 1 OIDN_sss_indirect.green 0 1 rgba.blue 0 2 OIDN_sss_indirect.blue 0 2 black -1 -1 OIDN_sss_indirect.alpha 0 3"
+  name Shuffle24
+  label "OUT_sss_indirect\n"
+  xpos 1079
+  ypos -295
+ }
+set N64eca00 [stack 0]
+push $N677ef00
+ oidnDenoise {
+  name oidnDenoise7
+  xpos 969
+  ypos -317
+ }
+add_layer {OIDN_sss_direct OIDN_sss_direct.red OIDN_sss_direct.green OIDN_sss_direct.blue OIDN_sss_direct.alpha}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  out1 OIDN_sss_direct
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 rgba.red 0 0 OIDN_sss_direct.red 0 0 rgba.green 0 1 OIDN_sss_direct.green 0 1 rgba.blue 0 2 OIDN_sss_direct.blue 0 2 black -1 -1 OIDN_sss_direct.alpha 0 3"
+  name Shuffle23
+  label "OUT_sss_direct\n"
+  xpos 969
+  ypos -295
+ }
+set N64ed400 [stack 0]
+push $N677ea00
+ oidnDenoise {
+  name oidnDenoise6
+  xpos 859
+  ypos -317
+ }
+add_layer {OIDN_trans_indirect OIDN_trans_indirect.red OIDN_trans_indirect.green OIDN_trans_indirect.blue OIDN_trans_indirect.alpha}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  out1 OIDN_trans_indirect
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 rgba.red 0 0 OIDN_trans_indirect.red 0 0 rgba.green 0 1 OIDN_trans_indirect.green 0 1 rgba.blue 0 2 OIDN_trans_indirect.blue 0 2 black -1 -1 OIDN_trans_indirect.alpha 0 3"
+  name Shuffle22
+  label OUT_trans_indirect
+  xpos 859
+  ypos -295
+ }
+set N64ede00 [stack 0]
+push $N677e500
+ oidnDenoise {
+  name oidnDenoise5
+  xpos 749
+  ypos -317
+ }
+add_layer {OIDN_trans_direct OIDN_trans_direct.red OIDN_trans_direct.green OIDN_trans_direct.blue OIDN_trans_direct.alpha}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  out1 OIDN_trans_direct
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 rgba.red 0 0 OIDN_trans_direct.red 0 0 rgba.green 0 1 OIDN_trans_direct.green 0 1 rgba.blue 0 2 OIDN_trans_direct.blue 0 2 black -1 -1 OIDN_trans_direct.alpha 0 3"
+  name Shuffle40
+  label OUT_trans_direct
+  xpos 749
+  ypos -295
+ }
+set N64ee800 [stack 0]
+push $N677e000
+ oidnDenoise {
+  name oidnDenoise4
+  xpos 639
+  ypos -317
+ }
+add_layer {OIDN_spec_indirect OIDN_spec_indirect.red OIDN_spec_indirect.green OIDN_spec_indirect.blue OIDN_spec_indirect.alpha}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  out1 OIDN_spec_indirect
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 rgba.red 0 0 OIDN_spec_indirect.red 0 0 rgba.green 0 1 OIDN_spec_indirect.green 0 1 rgba.blue 0 2 OIDN_spec_indirect.blue 0 2 black -1 -1 OIDN_spec_indirect.alpha 0 3"
+  name Shuffle39
+  label OUT_spec_indirect
+  xpos 639
+  ypos -295
+ }
+set N64ef200 [stack 0]
+push $N83e66d00
+ oidnDenoise {
+  name oidnDenoise3
+  xpos 529
+  ypos -317
+ }
+add_layer {OIDN_spec_direct OIDN_spec_direct.red OIDN_spec_direct.green OIDN_spec_direct.blue OIDN_spec_direct.alpha}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  out1 OIDN_spec_direct
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 rgba.red 0 0 OIDN_spec_direct.red 0 0 rgba.green 0 1 OIDN_spec_direct.green 0 1 rgba.blue 0 2 OIDN_spec_direct.blue 0 2 black -1 -1 OIDN_spec_direct.alpha 0 3"
+  name Shuffle44
+  label OUT_spec_direct
+  xpos 529
+  ypos -293
+ }
+set N6532000 [stack 0]
+push $N83e67200
+ oidnDenoise {
+  name oidnDenoise2
+  xpos 418
+  ypos -317
+ }
+add_layer {OIDN_diff_indirect OIDN_diff_indirect.red OIDN_diff_indirect.green OIDN_diff_indirect.blue OIDN_diff_indirect.alpha}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  out1 OIDN_diff_indirect
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 rgba.red 0 0 OIDN_diff_indirect.red 0 0 rgba.green 0 1 OIDN_diff_indirect.green 0 1 rgba.blue 0 2 OIDN_diff_indirect.blue 0 2 black -1 -1 OIDN_diff_indirect.alpha 0 3"
+  name Shuffle43
+  label OUT_diff_indirect
+  xpos 418
+  ypos -295
+ }
+set N6532a00 [stack 0]
+push $N83e67700
+ oidnDenoise {
+  name oidnDenoise1
+  selected true
+  xpos 309
+  ypos -319
+ }
+add_layer {OIDN_diff_direct OIDN_diff_direct.red OIDN_diff_direct.green OIDN_diff_direct.blue OIDN_diff_direct.alpha}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  out1 OIDN_diff_direct
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 rgba.red 0 0 OIDN_diff_direct.red 0 0 rgba.green 0 1 OIDN_diff_direct.green 0 1 rgba.blue 0 2 OIDN_diff_direct.blue 0 2 black -1 -1 OIDN_diff_direct.alpha 0 3"
+  name Shuffle41
+  label OUT_diff_direct
+  xpos 309
+  ypos -295
+ }
+set N6533400 [stack 0]
+push $N6780800
+push $N6781200
+push $N64ec000
+push $N64eca00
+push $N64ed400
+push $N64ede00
+push $N64ee800
+push $N64ef200
+push $N6532000
+push $N6532a00
+push $N6533400
+ Merge2 {
+  inputs 2
+  name Merge1
+  xpos 364
+  ypos -241
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos 474
+  ypos -241
+ }
+ Merge2 {
+  inputs 2
+  name Merge3
+  xpos 584
+  ypos -241
+ }
+ Merge2 {
+  inputs 2
+  name Merge4
+  xpos 694
+  ypos -241
+ }
+ Merge2 {
+  inputs 2
+  name Merge5
+  xpos 804
+  ypos -241
+ }
+ Merge2 {
+  inputs 2
+  name Merge6
+  xpos 914
+  ypos -241
+ }
+ Merge2 {
+  inputs 2
+  name Merge7
+  xpos 1024
+  ypos -241
+ }
+ Merge2 {
+  inputs 2
+  name Merge8
+  xpos 1134
+  ypos -241
+ }
+ Merge2 {
+  inputs 2
+  name Merge9
+  xpos 1236
+  ypos -241
+ }
+ Merge2 {
+  inputs 2
+  name Merge10
+  xpos 1405
+  ypos -241
+ }
+set Ne05b8a00 [stack 0]
+push $Ne05b8a00
+ Dot {
+  name Dot4
+  note_font_size 35
+  note_font_color 0xffffff
+  xpos 1515
+  ypos -238
+ }
+ Dot {
+  name Dot16
+  note_font_size 35
+  note_font_color 0xffffff
+  xpos 1515
+  ypos -188
+ }
+add_layer {OIDN_rgba OIDN_rgba.red OIDN_rgba.green OIDN_rgba.blue OIDN_rgba.alpha}
+ Shuffle2 {
+  inputs 2
+  fromInput1 {
+   {0}
+   B
+   A
+  }
+  fromInput2 {
+   {1}
+   B
+   A
+  }
+  in2 rgba
+  out2 OIDN_rgba
+  mappings "8 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.alpha 0 3 rgba.alpha 0 3 rgba.red 1 0 OIDN_rgba.red 1 0 rgba.green 1 1 OIDN_rgba.green 1 1 rgba.blue 1 2 OIDN_rgba.blue 1 2 rgba.alpha 1 3 OIDN_rgba.alpha 1 3"
+  name Shuffle25
+  label "OIDN\nrgba"
+  xpos 1405
+  ypos -203
+ }
+ Shuffle2 {
+  inputs 2
+  fromInput1 {
+   {0}
+   B
+   A
+  }
+  fromInput2 {
+   {1}
+   B
+   A
+  }
+  in2 rgba
+  out2 OIDN_diff_direct
+  mappings "8 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.alpha 0 3 rgba.alpha 0 3 rgba.red 1 0 OIDN_diff_direct.red 1 0 rgba.green 1 1 OIDN_diff_direct.green 1 1 rgba.blue 1 2 OIDN_diff_direct.blue 1 2 black -1 -1 OIDN_diff_direct.alpha 1 3"
+  name Shuffle4
+  label "OIDN\ndiffuse_direct"
+  xpos 242
+  ypos -203
+ }
+ Dot {
+  name Dot5
+  note_font_size 35
+  note_font_color 0xffffff
+  xpos 276
+  ypos -128
+ }
+ Shuffle2 {
+  inputs 2
+  fromInput1 {
+   {0}
+   B
+   A
+  }
+  fromInput2 {
+   {1}
+   B
+   A
+  }
+  in2 rgba
+  out2 OIDN_diff_indirect
+  mappings "8 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.alpha 0 3 rgba.alpha 0 3 rgba.red 1 0 OIDN_diff_indirect.red 1 0 rgba.green 1 1 OIDN_diff_indirect.green 1 1 rgba.blue 1 2 OIDN_diff_indirect.blue 1 2 black -1 -1 OIDN_diff_indirect.alpha 1 3"
+  name Shuffle5
+  label "OIDN\ndiffuse_indirect"
+  xpos 418
+  ypos -143
+ }
+ Shuffle2 {
+  inputs 2
+  fromInput1 {
+   {0}
+   B
+   A
+  }
+  fromInput2 {
+   {1}
+   B
+   A
+  }
+  in2 rgba
+  out2 OIDN_spec_direct
+  mappings "8 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.alpha 0 3 rgba.alpha 0 3 rgba.red 1 0 OIDN_spec_direct.red 1 0 rgba.green 1 1 OIDN_spec_direct.green 1 1 rgba.blue 1 2 OIDN_spec_direct.blue 1 2 black -1 -1 OIDN_spec_direct.alpha 1 3"
+  name Shuffle6
+  label "OIDN\nspecular_direct"
+  xpos 530
+  ypos -143
+ }
+ Shuffle2 {
+  inputs 2
+  fromInput1 {
+   {0}
+   B
+   A
+  }
+  fromInput2 {
+   {1}
+   B
+   A
+  }
+  in2 rgba
+  out2 OIDN_spec_indirect
+  mappings "8 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.alpha 0 3 rgba.alpha 0 3 rgba.red 1 0 OIDN_spec_indirect.red 1 0 rgba.green 1 1 OIDN_spec_indirect.green 1 1 rgba.blue 1 2 OIDN_spec_indirect.blue 1 2 black -1 -1 OIDN_spec_indirect.alpha 1 3"
+  name Shuffle7
+  label "OIDN\nspecular_indirect"
+  xpos 640
+  ypos -143
+ }
+ Shuffle2 {
+  inputs 2
+  fromInput1 {
+   {0}
+   B
+   A
+  }
+  fromInput2 {
+   {1}
+   B
+   A
+  }
+  in2 rgba
+  out2 OIDN_trans_direct
+  mappings "8 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.alpha 0 3 rgba.alpha 0 3 rgba.red 1 0 OIDN_trans_direct.red 1 0 rgba.green 1 1 OIDN_trans_direct.green 1 1 rgba.blue 1 2 OIDN_trans_direct.blue 1 2 black -1 -1 OIDN_trans_direct.alpha 1 3"
+  name Shuffle8
+  label "OIDN\ntransmission_direct"
+  xpos 750
+  ypos -143
+ }
+ Shuffle2 {
+  inputs 2
+  fromInput1 {
+   {0}
+   B
+   A
+  }
+  fromInput2 {
+   {1}
+   B
+   A
+  }
+  in2 rgba
+  out2 OIDN_trans_indirect
+  mappings "8 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.alpha 0 3 rgba.alpha 0 3 rgba.red 1 0 OIDN_trans_indirect.red 1 0 rgba.green 1 1 OIDN_trans_indirect.green 1 1 rgba.blue 1 2 OIDN_trans_indirect.blue 1 2 black -1 -1 OIDN_trans_indirect.alpha 1 3"
+  name Shuffle15
+  label "OIDN\ntransmission_indirect"
+  xpos 860
+  ypos -143
+ }
+ Shuffle2 {
+  inputs 2
+  fromInput1 {
+   {0}
+   B
+   A
+  }
+  fromInput2 {
+   {1}
+   B
+   A
+  }
+  in2 rgba
+  out2 OIDN_sss_direct
+  mappings "8 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.alpha 0 3 rgba.alpha 0 3 rgba.red 1 0 OIDN_sss_direct.red 1 0 rgba.green 1 1 OIDN_sss_direct.green 1 1 rgba.blue 1 2 OIDN_sss_direct.blue 1 2 black -1 -1 OIDN_sss_direct.alpha 1 3"
+  name Shuffle17
+  label "OIDN\nsss_direct"
+  xpos 970
+  ypos -143
+ }
+ Shuffle2 {
+  inputs 2
+  fromInput1 {
+   {0}
+   B
+   A
+  }
+  fromInput2 {
+   {1}
+   B
+   A
+  }
+  in2 rgba
+  out2 OIDN_sss_indirect
+  mappings "8 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.alpha 0 3 rgba.alpha 0 3 rgba.red 1 0 OIDN_sss_indirect.red 1 0 rgba.green 1 1 OIDN_sss_indirect.green 1 1 rgba.blue 1 2 OIDN_sss_indirect.blue 1 2 black -1 -1 OIDN_sss_indirect.alpha 1 3"
+  name Shuffle18
+  label "OIDN\nsss_indirect"
+  xpos 1080
+  ypos -143
+ }
+ Shuffle2 {
+  inputs 2
+  fromInput1 {
+   {0}
+   B
+   A
+  }
+  fromInput2 {
+   {1}
+   B
+   A
+  }
+  in2 rgba
+  out2 OIDN_coat_direct
+  mappings "8 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.alpha 0 3 rgba.alpha 0 3 rgba.red 1 0 OIDN_coat_direct.red 1 0 rgba.green 1 1 OIDN_coat_direct.green 1 1 rgba.blue 1 2 OIDN_coat_direct.blue 1 2 black -1 -1 OIDN_coat_direct.alpha 1 3"
+  name Shuffle19
+  label "OIDN\ncoat_direct"
+  xpos 1186
+  ypos -143
+ }
+ Shuffle2 {
+  inputs 2
+  fromInput1 {
+   {0}
+   B
+   A
+  }
+  fromInput2 {
+   {1}
+   B
+   A
+  }
+  in2 rgba
+  out2 OIDN_coat_indirect
+  mappings "8 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.alpha 0 3 rgba.alpha 0 3 rgba.red 1 0 OIDN_coat_indirect.red 1 0 rgba.green 1 1 OIDN_coat_indirect.green 1 1 rgba.blue 1 2 OIDN_coat_indirect.blue 1 2 black -1 -1 OIDN_coat_indirect.alpha 1 3"
+  name Shuffle20
+  label "OIDN\ncoat_indirect"
+  xpos 1296
+  ypos -143
+ }
+ Shuffle2 {
+  inputs 2
+  fromInput1 {
+   {0}
+   B
+   A
+  }
+  fromInput2 {
+   {1}
+   B
+   A
+  }
+  in2 rgba
+  out2 OIDN_emossion
+  mappings "8 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.alpha 0 3 rgba.alpha 0 3 rgba.red 1 0 OIDN_emossion.red 1 0 rgba.green 1 1 OIDN_emossion.green 1 1 rgba.blue 1 2 OIDN_emossion.blue 1 2 black -1 -1 OIDN_emossion.alpha 1 3"
+  name Shuffle21
+  label "OIDN\nemission"
+  xpos 1406
+  ypos -143
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  label Beauty_alpha
+  xpos 1406
+  ypos -84
+ }
+ Output {
+  name Output1
+  xpos 1406
+  ypos -7
+ }
+end_group
